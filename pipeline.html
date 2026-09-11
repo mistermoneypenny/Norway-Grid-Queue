@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Who is waiting for Norwegian grid capacity, how much, and for how long — built on Statnett's published connection-case data.">
+<meta name="robots" content="noindex,nofollow">
+<title>Datacenter pipeline · Norway Grid Queue</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9889;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:light}
+body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;
+     background:#faf9f5;color:#141413}
+img{max-width:100%}
+[hidden]:not([hidden=until-found]){display:none!important}
+</style>
+<link rel="stylesheet" href="assets/intel.css">
+</head>
+<body data-page="pipeline">
+<div class="wrap">
+<nav class="sitenav"><span class="brand">Norway Grid Queue</span>
+<a href="index.html">Capacity queue</a>
+<a href="pipeline.html" aria-current="page">Datacenter pipeline</a>
+<a href="odds.html">How long it takes</a>
+<a href="counterparties.html">Counterparties</a>
+<a href="power.html">Power &amp; costs</a>
+</nav>
+<header class="mast">
+  <div><p class="eyebrow">Statnett connection database · Næringstype = Datasenter</p><h1>Datacenter pipeline</h1><p>Every datacenter case Statnett publishes — who is queued, who already holds a reservation, and how much of it sits in the same price area as Lefdal.</p></div>
+  <div class="stamp" id="stamp"></div>
+</header><section class="kpis" id="kpis"></section><p class="src"><span class="tag ">Source</span> Statnett · <b>Saker</b> filtered to <b>Næringstype = Datasenter</b></p><div class="grid"><section class="panel span2">
+  <header><div><h3>Developers by capacity</h3><p class="sub">MW in the capacity queue and MW already reserved. Lefdal is marked.</p></div></header>
+  <div class="legend" id="devlegend"></div><div class="chart" id="devs"></div>
+  <p class="src"><span class="tag calc">Derived here</span> grouped by <b>Sluttkunde</b>; top 20 by total MW</p>
+</section><section class="panel">
+  <header><div><h3>By price area</h3><p class="sub">Where datacenter demand is concentrated. NO3 is Lefdal's area.</p></div></header>
+  <div class="legend" id="arealegend"></div><div class="chart" id="areas"></div>
+  <p class="src"><span class="tag ">Source</span> Statnett · joined to <b>Stasjoner</b> for price area</p>
+</section><section class="panel">
+  <header><div><h3>The full developer list</h3><p class="sub">Every named datacenter developer with queued or reserved capacity.</p></div></header>
+  <div id="devtable"></div>
+  <p class="src"><span class="tag calc">Derived here</span> one row per end customer</p>
+</section></div><footer><span>Data © Statnett SF and Brønnøysundregistrene, published openly. Spot prices via hvakosterstrommen.no. This page is an independent read of them.</span><span id="foot-stamp"></span></footer>
+</div>
+<div id="tip" aria-hidden="true"></div>
+<script src="assets/intel_data.js"></script>
+<script src="assets/intel.js"></script>
+</body>
+</html>

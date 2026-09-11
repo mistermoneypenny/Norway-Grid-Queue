@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Who is waiting for Norwegian grid capacity, how much, and for how long — built on Statnett's published connection-case data.">
+<meta name="robots" content="noindex,nofollow">
+<title>How long it takes · Norway Grid Queue</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9889;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:light}
+body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;
+     background:#faf9f5;color:#141413}
+img{max-width:100%}
+[hidden]:not([hidden=until-found]){display:none!important}
+</style>
+<link rel="stylesheet" href="assets/intel.css">
+</head>
+<body data-page="odds">
+<div class="wrap">
+<nav class="sitenav"><span class="brand">Norway Grid Queue</span>
+<a href="index.html">Capacity queue</a>
+<a href="pipeline.html">Datacenter pipeline</a>
+<a href="odds.html" aria-current="page">How long it takes</a>
+<a href="counterparties.html">Counterparties</a>
+<a href="power.html">Power &amp; costs</a>
+</nav>
+<header class="mast">
+  <div><p class="eyebrow">Kaplan-Meier · time from capacity queue to reservation</p><h1>How long it actually takes</h1><p>Statnett publishes no throughput figure. This estimates it from its own dates, counting the cases still waiting instead of quietly dropping them.</p></div>
+  <div class="stamp" id="stamp"></div>
+</header><section class="kpis" id="kpis"></section><section class="finding"><h2>The obvious number is the wrong one</h2><p>Taking the median wait across cases that <em>reached</em> a reservation gives a comfortable figure. It is survivorship bias: it can only see the cases that made it, and every case still stuck in the queue — the large majority — is excluded by construction. Censoring them properly instead gives a much longer answer.</p><div class="figs" id="figs"></div><p id="watchline"></p></section><div class="grid"><section class="panel span2">
+  <header><div><h3>Share still waiting, by time in the queue</h3><p class="sub">Kaplan-Meier estimate with a Greenwood 95% band. Cases still in the queue are censored at their current elapsed time.</p></div></header>
+  <div class="chart" id="km"></div><p class="caveat loud">The band widens sharply past roughly two years because few cases have been in the queue that long. Treat the far right of this curve as a direction, not a date — the median is struck with a handful of cases still at risk.</p>
+  <p class="src"><span class="tag ">Source</span> Statnett · <b>Dato - Plassert i kapasitetskø</b> and <b>Dato - reservert kapasitet</b></p><p class="src"><span class="tag calc">Derived here</span> Kaplan-Meier estimator; Greenwood variance</p>
+</section><section class="panel">
+  <header><div><h3>By price area</h3><p class="sub">NO3 is Lefdal's area. Lower 'still waiting' means a faster area.</p></div></header>
+  <div id="segarea"></div>
+  <p class="src"><span class="tag calc">Derived here</span> per-area Kaplan-Meier; areas with under 20 cases or 8 conversions are omitted</p>
+</section><section class="panel">
+  <header><div><h3>By sector</h3><p class="sub">Whether datacenters move differently from the rest of the queue.</p></div></header>
+  <div id="segsector"></div>
+  <p class="src"><span class="tag calc">Derived here</span> per-sector Kaplan-Meier, same thresholds</p>
+</section></div><footer><span>Data © Statnett SF and Brønnøysundregistrene, published openly. Spot prices via hvakosterstrommen.no. This page is an independent read of them.</span><span id="foot-stamp"></span></footer>
+</div>
+<div id="tip" aria-hidden="true"></div>
+<script src="assets/intel_data.js"></script>
+<script src="assets/intel.js"></script>
+</body>
+</html>

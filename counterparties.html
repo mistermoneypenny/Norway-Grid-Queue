@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Who is waiting for Norwegian grid capacity, how much, and for how long — built on Statnett's published connection-case data.">
+<meta name="robots" content="noindex,nofollow">
+<title>Counterparties · Norway Grid Queue</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#9889;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{color-scheme:light}
+body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;
+     background:#faf9f5;color:#141413}
+img{max-width:100%}
+[hidden]:not([hidden=until-found]){display:none!important}
+</style>
+<link rel="stylesheet" href="assets/intel.css">
+</head>
+<body data-page="counterparties">
+<div class="wrap">
+<nav class="sitenav"><span class="brand">Norway Grid Queue</span>
+<a href="index.html">Capacity queue</a>
+<a href="pipeline.html">Datacenter pipeline</a>
+<a href="odds.html">How long it takes</a>
+<a href="counterparties.html" aria-current="page">Counterparties</a>
+<a href="power.html">Power &amp; costs</a>
+</nav>
+<header class="mast">
+  <div><p class="eyebrow">Brønnøysundregistrene · Enhetsregisteret and Regnskapsregisteret</p><h1>Counterparties</h1><p>Lefdal and the datacenter developers competing for the same capacity, as the Norwegian company register has them.</p></div>
+  <div class="stamp" id="stamp"></div>
+</header><section class="kpis" id="kpis"></section><div class="grid"><section class="panel span2">
+  <header><div><h3>Company records</h3><p class="sub">Latest filed accounts. Figures are NOK as filed.</p></div></header>
+  <div id="cotable"></div>
+  <p class="src"><span class="tag ">Source</span> BRREG · <b>Enhetsregisteret</b> and <b>Regnskapsregisteret</b></p><p class="src"><span class="tag ">Note</span> the register serves only the most recently filed year, so there is no trend here yet — it accumulates as snapshots are taken</p>
+</section><section class="panel span2">
+  <header><div><h3>Names that could not be resolved</h3><p class="sub">Statnett records end customers informally. These did not match a registered company, and are left unresolved rather than attached to a plausible guess.</p></div></header>
+  <div id="untable"></div>
+  <p class="src"><span class="tag calc">Derived here</span> exact-name matching against the register, plus a small hand-checked alias map in <b>intel_fetch.py</b></p>
+</section></div><footer><span>Data © Statnett SF and Brønnøysundregistrene, published openly. Spot prices via hvakosterstrommen.no. This page is an independent read of them.</span><span id="foot-stamp"></span></footer>
+</div>
+<div id="tip" aria-hidden="true"></div>
+<script src="assets/intel_data.js"></script>
+<script src="assets/intel.js"></script>
+</body>
+</html>
