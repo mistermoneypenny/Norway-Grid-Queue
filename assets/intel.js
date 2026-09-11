@@ -18,14 +18,14 @@
     var y = v / 365;
     return y < 1 ? Math.round(v / 30.4) + " mo" : (Math.round(y * 10) / 10) + " yr";
   }
-  function nok(v) { return v == null ? "—" : (Math.round(v * 1000) / 1000).toFixed(3); }
+  function eur(v) { return v == null ? "—" : (Math.round(v * 10) / 10).toFixed(1); }
   function money(v) {
     if (v == null) return "—";
-    var a = Math.abs(v);
-    if (a >= 1e9) return (v / 1e9).toFixed(1) + " bn";
-    if (a >= 1e6) return (v / 1e6).toFixed(0) + " m";
-    if (a >= 1e3) return (v / 1e3).toFixed(0) + " k";
-    return String(v);
+    var a = Math.abs(v), s = v < 0 ? "-€" : "€";
+    if (a >= 1e9) return s + (a / 1e9).toFixed(2) + " bn";
+    if (a >= 1e6) return s + (a / 1e6).toFixed(1) + " m";
+    if (a >= 1e3) return s + (a / 1e3).toFixed(0) + " k";
+    return s + String(Math.round(a));
   }
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) {
@@ -249,7 +249,7 @@
       var v = lo + (hi - lo) * g / 4;
       el("line", { x1: m.l, x2: m.l + iw, y1: y(v), y2: y(v), stroke: "var(--grid)",
         "stroke-width": 1 }, s);
-      txt(s, m.l - 8, y(v) + 3.5, opts.fmtY ? opts.fmtY(v) : nok(v), { "text-anchor": "end" });
+      txt(s, m.l - 8, y(v) + 3.5, opts.fmtY ? opts.fmtY(v) : eur(v), { "text-anchor": "end" });
     }
     labels.forEach(function (l, i) {
       if (labels.length > 14 && i % Math.ceil(labels.length / 8) !== 0 && i !== labels.length - 1) return;
@@ -291,7 +291,7 @@
       series.forEach(function (ser, si) {
         if (ser.points[i] == null) return;
         h += '<div class="row"><i style="background:' + cvar(SV[si % SV.length]) + '"></i>' +
-          esc(ser.key) + " <b>" + (opts.fmtV ? opts.fmtV(ser.points[i]) : nok(ser.points[i])) + "</b></div>";
+          esc(ser.key) + " <b>" + (opts.fmtV ? opts.fmtV(ser.points[i]) : eur(ser.points[i])) + "</b></div>";
       });
       showTip(e, h);
     });
@@ -316,7 +316,7 @@
     [mx, 0, -mx].forEach(function (v) {
       el("line", { x1: m.l, x2: m.l + iw, y1: y(v), y2: y(v),
         stroke: v === 0 ? "var(--axis)" : "var(--grid)", "stroke-width": 1 }, s);
-      txt(s, m.l - 8, y(v) + 3.5, (v > 0 ? "+" : "") + nok(v), { "text-anchor": "end" });
+      txt(s, m.l - 8, y(v) + 3.5, (v > 0 ? "+" : "") + eur(v), { "text-anchor": "end" });
     });
     spread.forEach(function (p, i) {
       var xx = m.l + (i / spread.length) * iw;
@@ -327,7 +327,7 @@
         .addEventListener("mousemove", function (e) {
           showTip(e, "<b>" + p.m + "</b>" +
             '<div class="row">NO3 vs other areas <b>' + (p.diff > 0 ? "+" : "") +
-            nok(p.diff) + " NOK/kWh</b></div>" +
+            eur(p.diff) + " EUR/MWh</b></div>" +
             '<div class="row">' + (p.diff < 0 ? "NO3 cheaper" : "NO3 dearer") + "</div>");
         });
       if (i % Math.ceil(spread.length / 8) === 0 || i === spread.length - 1) {
@@ -442,9 +442,9 @@
     var rows = C.companies || [];
     var watch = rows.filter(function (r) { return r.watch; })[0];
     set("kpis", [
-      [watch ? money(watch.revenue) : "—", "Lefdal revenue (NOK)",
+      [watch ? money(watch.revenue) : "—", "Lefdal revenue",
        watch && watch.year ? "FY" + watch.year : ""],
-      [watch ? money(watch.equity) : "—", "Lefdal equity (NOK)", ""],
+      [watch ? money(watch.equity) : "—", "Lefdal equity", ""],
       [n0(rows.length), "Companies resolved", "Lefdal + datacenter peers"],
       [n0((C.unresolved || []).length), "Unresolved names", "shown below, not guessed"],
     ]);
@@ -476,8 +476,8 @@
     var no3 = (P.series || []).filter(function (s) { return s.key === "NO3"; })[0];
     var last = P.spread && P.spread.length ? P.spread[P.spread.length - 1].diff : null;
     set("kpis", [
-      [nok(P.no3_latest), "NO3 spot, NOK/kWh", P.latest_month || ""],
-      [last == null ? "—" : (last > 0 ? "+" : "") + nok(last), "NO3 vs other areas",
+      [eur(P.no3_latest), "NO3 spot, EUR/MWh", P.latest_month || ""],
+      [last == null ? "—" : (last > 0 ? "+" : "") + eur(last), "NO3 vs other areas",
        last == null ? "" : (last < 0 ? "NO3 cheaper" : "NO3 dearer")],
       [n0(P.days_cached), "Area-days cached", "day-ahead, hourly mean"],
       [n0((P.months || []).length), "Months of history", ""],
@@ -491,7 +491,7 @@
     table(byId("pricetable"),
       [{ label: "Month", key: "m", mono: true }].concat((P.series || []).map(function (s, i) {
         return { label: s.key, key: s.key, num: true,
-                 render: function (r) { return nok(r[s.key]); } };
+                 render: function (r) { return eur(r[s.key]); } };
       })),
       (P.months || []).map(function (m, i) {
         var row = { m: m };
